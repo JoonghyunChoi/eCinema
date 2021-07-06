@@ -1,0 +1,30 @@
+.all-header {
+    width: 70%;
+    font-size: 20px;
+    margin-top: 5px;
+
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.left-header {
+    margin-left: 70px;
+}
+
+a { 
+    padding: 15px;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 25px;
+}
+
+a:link,
+a:visited { color: black; }
+
+a:hover,
+a:active { color: gray; }
+
