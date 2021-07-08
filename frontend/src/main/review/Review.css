@@ -1,0 +1,93 @@
+.QA-container {
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 30px auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.QA-section {
+    height: 400px;
+    padding: 16px 0px 16px 0px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+th { 
+    font-size: 18px;
+}
+
+th.head-col1 { 
+    width: 50px;
+    padding: 0 0 0 15px
+}
+
+th.head-col2 { 
+    width: 600px
+}
+
+th.head-col3 { 
+    width: 150px
+}
+
+th.head-col4 { 
+    width: 100px
+}
+
+th.head-col5 { 
+    width: 200px
+}
+
+td {
+    text-align: center;
+}
+
+td.body-data1 { 
+    width: 50px
+}
+
+td.body-data2 {
+    width: 600px
+}
+
+td.body-data3 { 
+    width: 150px
+}
+
+td.body-data4 { 
+    width: 100px
+}
+
+td.body-data5 { 
+    width: 200px
+}
+
+.new-post{
+    margin-top: 10px;
+    margin-left: 93%;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+}
+
+.pages button{
+    padding: 10px;
+    font: inherit;
+    border: 1px solid #fa923f;
+    background-color: transparent;
+    color: #fa923f;
+    cursor: pointer;
+}
+.pages button:hover,
+.pages button:active{
+    color: white;
+    background-color: #fa923f;
+}

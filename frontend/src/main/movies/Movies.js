@@ -1,24 +1,24 @@
-import { Component } from 'react'
-import Movie from '../movies/movie/Movie'
+import { Component } from "react"
+import Movie from "./movie/Movie"
 
-class Home extends Component {
+class Movies extends Component {
 
     state = {}
 
     componentDidMount() {
-        this.getMovies() 
+        this.getMovies()
+    }
+
+    callApi = () => {
+        return fetch("https://yts.mx/api/v2/list_movies.json?limit=10&sort_by=like_count")
+            .then(response => response.json())
+            .then(json => json.data.movies)
+            .catch(e => console.log(e))
     }
 
     getMovies = async () => {
         const movies = await this.callApi()
         this.setState({ movies })
-    }
-
-    callApi = () => {
-        return fetch("https://yts.mx/api/v2/list_movies.json?limit=4&sort_by=like_count")
-            .then(response => response.json())
-            .then(json => json.data.movies)
-            .catch(e => console.log(e))
     }
 
     renderMovies = () => {
@@ -47,4 +47,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default Movies

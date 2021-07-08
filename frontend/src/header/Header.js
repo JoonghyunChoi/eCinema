@@ -13,8 +13,8 @@ class Header extends Component {
                         <NavLink exact to={{ pathname: '/home' }} className="logo">
                             eCinema
                         </NavLink>
-                        <NavLink to={{ pathname: '/reserve'}}>
-                            예매
+                        <NavLink to={{ pathname: '/movies'}}>
+                            영화
                         </NavLink>
                         <NavLink to={{ pathname: '/screen'}}>
                             상영
