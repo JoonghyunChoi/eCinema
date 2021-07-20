@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Long> {
 
-    List<Reservation> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
+    List<Reservation> findByUserOrderByCreatedAtDesc(User user, Pageable pageable);
 }

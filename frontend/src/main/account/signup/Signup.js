@@ -24,15 +24,15 @@ class Signup extends Component {
              .then(response => {
                 console.log(response);
             
-                this.props.history.push('/home'); 
+                this.props.history.push('/login'); 
         })
              .catch(error => console.log(error)) 
     }
 
-    render () {
+    render () {     // 비밀번호 확인
         return (
             <section>
-                <div className="NewPost">
+                <div className="NewPost">   
                     <label>아이디</label>
                     <input type="text" value={this.state.username} onChange={(event) => this.setState({username: event.target.value})} />
                     <label>비밀번호</label>
