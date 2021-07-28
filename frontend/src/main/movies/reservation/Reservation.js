@@ -1,10 +1,12 @@
 import { Component } from "react";
+import { withRouter } from "react-router";
 import axios from "axios";
 
 class Reservation extends Component {
 
     state = {
         movieId: this.props.match.params.id,
+        price: '6,000',
         rsvDate: '',
         rsvTime: '09:00',
         ccNumber: '',
@@ -15,6 +17,7 @@ class Reservation extends Component {
     postHandler = () => {
         const post = {
             movieId: this.state.movieId,
+            price: this.state.price,
             rsvDate: this.state.rsvDate,
             rsvTime: this.state.rsvTime,
             ccNumber: this.state.ccNumber,
@@ -23,10 +26,11 @@ class Reservation extends Component {
         }
         console.log(post)
 
-        axios.post('/api/reservation', post)
+        axios.post('/api/reservations', post)
              .then(response => {
                 console.log(response)
-                this.props.history.push('/home')})
+                this.props.history.push('/home')
+            })
              .catch(e => console.log(e))
     }
 
@@ -42,7 +46,7 @@ class Reservation extends Component {
                     <label>예매일자</label>
                     <input type="date" value={rsvDate} onChange={(e) => this.setState({rsvDate: e.target.value})} />
                     <label>예매시간</label>
-                    <select value={this.state.rsvTime} onChange={(e) => this.setState({rsvTime: e.target.value})}>
+                    <select value={rsvTime} onChange={(e) => this.setState({rsvTime: e.target.value})}>
                         <option value="09:00">09:00</option>
                         <option value="13:00">13:00</option>
                         <option value="17:00">17:00</option>
@@ -63,4 +67,4 @@ class Reservation extends Component {
     }
 }
 
-export default Reservation
+export default withRouter(Reservation)

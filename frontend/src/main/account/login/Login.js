@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { withRouter } from "react-router";
 import axios from "axios";
 import './Login.css'
 
@@ -14,16 +15,18 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password,
         }
-        axios.post('/api/login', post)
+        axios.post('/login', post)
             .then(response => {
-            console.log(response);
-            
-            this.props.history.push('/home'); 
+            console.log(response)
+            localStorage.setItem("token", response.data)
+
+            this.props.history.push('/home')
+            this.props.tokenHandler(localStorage.getItem("token"))
         })
-        .catch(error => console.log(error)) 
+        .catch(e => console.log(e))
     }
 
-    toListHandler = () => {
+    toListHandler = () => {     // navlink로 변경
         this.props.history.push('/signup')
     }
 
@@ -45,4 +48,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default withRouter(Login)

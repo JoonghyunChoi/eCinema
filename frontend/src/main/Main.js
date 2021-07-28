@@ -26,10 +26,9 @@ class Main extends Component {
                     <Route path='/review' exact component={Review}/>
                     <Route path='/review/post:id' exact component={Post}/>
                     <Route path='/review/newpost' exact component={NewPost}/>
-                    <Route path='/login' component={Login}/>
+                    <Route path='/login' render={() => <Login tokenHandler={this.props.tokenHandler} />}/>
                     <Route path='/signup' component={Signup}/>
                 </Switch>
-                
             </div>
         )
     }

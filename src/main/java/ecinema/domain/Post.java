@@ -3,22 +3,23 @@ package ecinema.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String writer;
     private String content;
-    private Date createdAt;
+    private String createdAt;
 
     @PrePersist
     void createdAt() {
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

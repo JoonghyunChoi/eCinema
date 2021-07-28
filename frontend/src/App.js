@@ -5,11 +5,18 @@ import Main from './main/Main';
 
 class App extends Component {
 
+    state = { token: localStorage.getItem("token") }
+
+    tokenHandler = (token) => {
+        this.setState( {token: token} )
+
+    }
+
     render() {
         return (
             <div className="App">
-                <Header/>
-                <Main/>
+                <Header token={this.state.token} tokenHandler={this.tokenHandler}/>
+                <Main tokenHandler={this.tokenHandler}/>
             </div>
         )
     }

@@ -6,48 +6,36 @@ import './Review.css'
 class Review extends Component {
 
     state = {
-        posts: [ {id:1, title:'좋은 영화', writer:'최중현', content:'', createdAt:"2021/7/6 17:00"} ],
+        posts: [],
         pageIndexes: [0],
         start: 0,
-        end : 10
+        end : 5
     }
 
     componentDidMount() {
-        axios.get('/api/posts/count')
+        axios.get('/api/posts?page=0')
             .then(response => {
-                const dataCount = response.data
-
-                let pageCount = Math.floor(dataCount / 10)
-                if (dataCount % 10 > 0) {
-                    pageCount++
-                }
-
-                const pageIndexes = []
-                for (let i = 0; i < pageCount; i++) {
-                    pageIndexes.push(i)
-                }
-
-                this.setState( {pageIndexes: pageIndexes} )
+                console.log(response)
+                this.setState({ posts: response.data._embedded.content,
+                    pageIndexes:  response.data.pageIndexes 
+                })
             })
-            .catch(error => console.log(error))
-
-        axios.get('/api/posts')
-            .then(response => {this.setState( {posts: response.data} )})
-            .catch(error => console.log(error)) 
+            .catch(e => console.log(e)) 
     }
 
-    pageHandler = (pageIndex) => {
-        pageIndex = pageIndex * 10
 
-        axios.get('/api/posts')     // ?index={pageIndex}
-        .then(response => {this.setState( {posts: response.data} )})
-        .catch(error => console.log(error))  
+    currentPageHandler = (pageIndex) => {
+        axios.get('/api/posts?page=' + pageIndex)
+        .then(response => { 
+            this.setState( {posts: response.data._embedded.content} )
+        })
+        .catch(e => console.log(e))  
     }
 
     prevPagesHandler = () => {
         if (this.state.start > 0) {
-            const start = this.state.start - 10
-            const end = this.state.end - 10
+            const start = this.state.start - 5
+            const end = this.state.end - 5
 
             this.setState( {start: start, end: end} )
         }
@@ -55,15 +43,15 @@ class Review extends Component {
 
     nextPagesHandler = () => {
         if (this.state.pageIndexes.length > this.state.end) {
-            const start = this.state.start + 10
-            const end = this.state.end + 10
+            const start = this.state.start + 5
+            const end = this.state.end + 5
 
             this.setState( {start: start, end: end} )
         }
     }
 
 
-    render() {      // 컴포넌트 쪼개기
+    render() {
         return (
             <div className="QA-container">
                 <section className="QA-section">
@@ -71,8 +59,8 @@ class Review extends Component {
                         <tr>
                             <th className="head-col1" scope="col">번호</th>
                             <th className="head-col2" scope="col">제목</th>
-                            <th className="head-col3" scope="col">작성자</th>
-                            <th className="head-col4" scope="col">등록일</th>
+                            <th className="head-col3" scope="col">글쓴이</th>
+                            <th className="head-col4" scope="col">작성일</th>
                             <th className="head-col5" scope="col"></th>
                         </tr>
 
@@ -80,7 +68,14 @@ class Review extends Component {
                         <tr>  
                             <td className="body-data1">{post.id}</td>
                             <td className="body-data2">
-                                <Link to={"/review/post" + post.id} key={post.id}>{post.title}</Link>
+                                <Link to={
+                                    {pathname: "/review/post" + post.id,
+                                     state: {title: post.title,
+                                             content: post.content,
+                                             writer: post.writer,
+                                             createdAt: post.createdAt}
+                                }}
+                                key={post.id}>{post.title}</Link>
                             </td>
                             <td className="body-data3">{post.writer}</td>
                             <td className="body-data4">{post.createdAt}</td>
@@ -100,7 +95,7 @@ class Review extends Component {
 
                     {this.state.pageIndexes.slice(this.state.start, this.state.end).map(pageIndex => 
                         <span>
-                            <button onClick={ () => this.pageHandler(pageIndex) } key={pageIndex}>{pageIndex + 1}</button>
+                            <button onClick={ () => this.currentPageHandler(pageIndex) } key={pageIndex}>{pageIndex + 1}</button>
                         </span>
                     )}
                         

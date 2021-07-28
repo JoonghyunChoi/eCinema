@@ -1,14 +1,18 @@
 package ecinema.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 
 @Entity
@@ -17,15 +21,16 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class User implements UserDetails {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private final String username;
+    //@JsonIgnore
     private final String password;
     private final String email;
     private final String phoneNumber;
-    private Date createdAt;
+    private String createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,6 +59,6 @@ public class User implements UserDetails {
 
     @PrePersist
     void createdAt() {
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

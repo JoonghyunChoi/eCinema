@@ -8,17 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="/signup")
+@RequestMapping("/signup")
 public class SignupController {
 
-    private UserRepository userRepo;
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
-    public SignupController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserRepository userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)

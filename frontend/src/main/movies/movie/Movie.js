@@ -22,15 +22,16 @@ function MoviePoster(
     {id, poster, title_long, genres, synopsis, rating, runtime}) {
 
     return (
-        <Link to={{
-            pathname: '/movies/mvdetail' + id,
-            state: {poster: poster,
-                    title_long: title_long,
-                    genres: genres,
-                    synopsis: synopsis,
-                    rating: rating,
-                    runtime: runtime}
-        }}>
+        <Link to = {
+            {pathname: '/movies/mvdetail' + id,
+             state: {poster: poster,
+                     title_long: title_long,
+                     genres: genres,
+                     synopsis: synopsis,
+                     rating: rating,
+                     runtime: runtime}
+            }
+        }> 
             <img src = {poster}/>
         </Link>
     )

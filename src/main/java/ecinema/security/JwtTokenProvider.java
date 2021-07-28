@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 
 @Component
 public class JwtTokenProvider {
@@ -25,9 +26,9 @@ public class JwtTokenProvider {
 
     private long tokenValidTime = 30 * 60 * 1000L;
 
+    @Autowired
     private UserRepositoryUserDetailsService userRepositoryUserDetailsService;
 
-    @Autowired
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, UserRepositoryUserDetailsService userRepositoryUserDetailsService) {
         this.userRepositoryUserDetailsService = userRepositoryUserDetailsService;
 
@@ -35,9 +36,12 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(String username) {
+    public String createToken(Long userId, String username) {
+        HashMap<String, Object> claim = new HashMap<>();
+        claim.put("username", username);
+        claim.put("userId", userId.toString());
 
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims(claim);
         Date date = new Date();
 
         return Jwts.builder()
