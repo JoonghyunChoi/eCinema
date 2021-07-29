@@ -24,7 +24,7 @@ public class Comment {
     private String content;
     private String createdAt;
 
-    @Builder            // builder?
+    @Builder
     public Comment(Post post, Long parentId, String writer, String content) {
         this.post = post;
         this.parentId = parentId;

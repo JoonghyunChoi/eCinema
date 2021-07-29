@@ -1,47 +1,32 @@
-.board {
-    width: 90%;
-    margin: 20px auto;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    text-align: left;
-}
-
-
 .post {
-    width: 90%;
+    width: 85%;
     margin: 20px auto;
     margin-bottom: 0px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
     text-align: left;
 }
 
 .parent-reply-form input {
     display: block;
-    width: 90%;
+    width: 80%;
     margin: 0px auto;
     height: 40px;
     padding-left: 15px;
     box-sizing: border-box;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
     outline: none;
     font: inherit;
     text-align: left;
-
 }
 
 .parent-reply-button {
     text-align: right;
     margin-top: 10px;
     margin-bottom: 15px;
-    margin-right: 60px;
+    margin-right: 11%;
 }
 
 .parent-reply-button button{
@@ -60,13 +45,12 @@
 
 
 .parent-comment {
-    width: 90%;
+    width: 77%;
     margin: 0px auto;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
     text-align: left;
 }
 
@@ -80,14 +64,12 @@
 
 .child-reply-form input {
     display: block;
-    width: 86%;
+    width: 70%;
     margin: 0px auto;
-    margin-right: 59px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
     outline: none;
     text-align: left;
 }
@@ -97,7 +79,7 @@
     text-align: right;
     margin-top: 10px;
     margin-bottom: 15px;
-    margin-right: 60px;
+    margin-right: 15%;
 }
 
 .child-reply-button button{
@@ -116,14 +98,13 @@
 
 
 .child-comment {
-    width: 86%;
+    width: 70%;
     margin: 0px auto;
-    margin-right: 59px;
+    margin-right: 15%;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
     text-align: left;
 }
 

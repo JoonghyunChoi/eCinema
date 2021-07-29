@@ -1,9 +1,7 @@
 package ecinema.domain;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,21 +14,27 @@ import java.util.Collection;
 
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor
 @Data
-@RequiredArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private final String username;
+    private String username;
     //@JsonIgnore
-    private final String password;
-    private final String email;
-    private final String phoneNumber;
+    private String password;
+    private String email;
+    private String phoneNumber;
     private String createdAt;
+
+    public User(String username, String password, String email, String phoneNumber){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

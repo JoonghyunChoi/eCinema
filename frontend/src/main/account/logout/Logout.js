@@ -1,5 +1,4 @@
 import { Component } from "react"
-import axios from "axios"
 import './Logout.css'
 
 class Logout extends Component {
@@ -13,7 +12,7 @@ class Logout extends Component {
 
     render() {
         return (
-            <button onClick={this.logoutHandler}>로그아웃</button>
+            <span className='logout' onClick={this.logoutHandler}>로그아웃</span>
         )
     }
 }

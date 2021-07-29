@@ -1,6 +1,6 @@
-.QA-container {
+.review-container {
     flex-wrap: wrap;
-    width: 90%;
+    width: 85%;
     margin: 30px auto;
 }
 
@@ -8,16 +8,16 @@ table {
     border-collapse: collapse;
 }
 
-.QA-section {
+.review-section {
     height: 400px;
     padding: 16px 0px 16px 0px;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
+    border: 2px solid #eee;
 }
 
 tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid black;
 }
+
 
 th { 
     font-size: 18px;
@@ -29,23 +29,25 @@ th.head-col1 {
 }
 
 th.head-col2 { 
-    width: 600px
+    width: 500px
 }
 
 th.head-col3 { 
-    width: 150px
+    width: 200px
 }
 
 th.head-col4 { 
-    width: 100px
+    width: 200px
 }
 
 th.head-col5 { 
     width: 200px
 }
 
+
 td {
     text-align: center;
+    height: 35px;
 }
 
 td.body-data1 { 
@@ -67,6 +69,7 @@ td.body-data4 {
 td.body-data5 { 
     width: 200px
 }
+
 
 .new-post{
     margin-top: 10px;

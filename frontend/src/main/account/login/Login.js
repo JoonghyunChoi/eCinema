@@ -1,6 +1,7 @@
-import { Component } from "react";
-import { withRouter } from "react-router";
-import axios from "axios";
+import { Component } from "react"
+import { withRouter } from "react-router"
+import jwt_decode from 'jwt-decode'
+import axios from "axios"
 import './Login.css'
 
 class Login extends Component {
@@ -16,12 +17,19 @@ class Login extends Component {
             password: this.state.password,
         }
         axios.post('/login', post)
-            .then(response => {
-            console.log(response)
-            localStorage.setItem("token", response.data)
+            .then(response => {console.log(response)
+
+            const token = response.data
+            const decoded = jwt_decode(token)
+            const username = decoded.username
+            const userId = decoded.userId
+
+            localStorage.setItem("token", token)
+            localStorage.setItem("username", username)
+            localStorage.setItem("userId", userId)
 
             this.props.history.push('/home')
-            this.props.tokenHandler(localStorage.getItem("token"))
+            this.props.tokenHandler(token)
         })
         .catch(e => console.log(e))
     }

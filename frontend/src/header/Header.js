@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import Login from '../main/account/login/Login'
+import { Button } from 'semantic-ui-react'
 import Logout from '../main/account/logout/Logout'
 import './Header.css'
 
@@ -28,10 +28,10 @@ class Header extends Component {
                 </section>
                 <section className="right-header">
                     <ul>
-                        {this.props.token ? <Logout tokenHandler={this.props.tokenHandler}/> : 
-                            <NavLink to = {
-                                {pathname: '/login'}
-                            }>로그인
+                        {this.props.token ? <Logout tokenHandler={this.props.tokenHandler}/> :
+                            <NavLink  to = {
+                                        {pathname: '/login'}
+                                    }>로그인
                             </NavLink>
                         }
                     </ul>

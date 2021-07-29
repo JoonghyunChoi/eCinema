@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@RequestMapping("/reservation")
+@RequestMapping("/reservations")
 @RepositoryRestController
 public class ReservationController {
 
@@ -28,11 +28,10 @@ public class ReservationController {
     @PostMapping
     @ResponseBody
     public EntityModel<Reservation> postReservation(@RequestBody ReservationForm reservationForm) {
-
         User user = userRepo.getById(reservationForm.getUserId());
         Reservation reservation = reservationForm.toReservation(user);
 
-        EntityModel<Reservation> reserve = EntityModel.of(reservation);
+        EntityModel<Reservation> reserve = EntityModel.of(reservationRepo.save(reservation));
         reserve.add(linkTo(methodOn(ReservationController.class).postReservation(reservationForm)).withSelfRel());
 
         return reserve;

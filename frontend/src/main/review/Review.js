@@ -53,15 +53,15 @@ class Review extends Component {
 
     render() {
         return (
-            <div className="QA-container">
-                <section className="QA-section">
+            <div className="review-container">
+                <section className="review-section">
                     <table>
                         <tr>
                             <th className="head-col1" scope="col">번호</th>
                             <th className="head-col2" scope="col">제목</th>
                             <th className="head-col3" scope="col">글쓴이</th>
                             <th className="head-col4" scope="col">작성일</th>
-                            <th className="head-col5" scope="col"></th>
+                            <th className="head-col5" scope="col">비고</th>
                         </tr>
 
                         {this.state.posts.map(post => 
@@ -85,12 +85,12 @@ class Review extends Component {
                 </section>
 
                 <div className="new-post">
-                        <NavLink to={{pathname: '/review/newpost'}}>New Post</NavLink>
+                        <NavLink to={{pathname: '/review/newpost'}}>글 작성</NavLink>
                 </div> 
 
                 <div className="pages">
                     <span>
-                        <button onClick={this.prevPagesHandler}>prev</button>
+                        <button onClick={this.prevPagesHandler}>이전</button>
                     </span>
 
                     {this.state.pageIndexes.slice(this.state.start, this.state.end).map(pageIndex => 
@@ -100,7 +100,7 @@ class Review extends Component {
                     )}
                         
                     <span>
-                        <button onClick={this.nextPagesHandler}>next</button>
+                        <button onClick={this.nextPagesHandler}>이후</button>
                     </span>
                 </div>
             </div>

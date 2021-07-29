@@ -1,6 +1,5 @@
 import { Component } from "react"
 import { Route, Switch } from "react-router-dom"
-
 import Home from "./home/Home"
 import Screen from "./screen/Screen"
 import Review from "./review/Review"

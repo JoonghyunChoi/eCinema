@@ -5,6 +5,7 @@ import axios from "axios";
 class Reservation extends Component {
 
     state = {
+        userId: localStorage.getItem("userId"),
         movieId: this.props.match.params.id,
         price: '6,000',
         rsvDate: '',
@@ -16,6 +17,7 @@ class Reservation extends Component {
 
     postHandler = () => {
         const post = {
+            userId: this.state.userId,
             movieId: this.state.movieId,
             price: this.state.price,
             rsvDate: this.state.rsvDate,
@@ -24,8 +26,6 @@ class Reservation extends Component {
             ccExpiration: this.state.ccExpiration,
             ccCVV: this.state.ccCVV
         }
-        console.log(post)
-
         axios.post('/api/reservations', post)
              .then(response => {
                 console.log(response)
