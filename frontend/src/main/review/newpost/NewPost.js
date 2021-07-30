@@ -25,7 +25,7 @@ class NewPost extends Component {
         .catch(e => console.log(e)) 
     }
 
-    toListHandler = () => {     // navlink로
+    toListHandler = () => {
         this.props.history.push('/review')
     }
 
@@ -34,7 +34,7 @@ class NewPost extends Component {
         return (
             <section>
                 <div className="NewPost">
-                    <h1>좋은 후기를 남겨주세요.</h1>
+                    <h1>영화 후기를 남겨주세요</h1>
                     <label>제목</label>
                     <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
                     <label>내용</label>

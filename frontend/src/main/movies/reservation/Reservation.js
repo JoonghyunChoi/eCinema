@@ -27,8 +27,7 @@ class Reservation extends Component {
             ccCVV: this.state.ccCVV
         }
         axios.post('/api/reservations', post)
-             .then(response => {
-                console.log(response)
+             .then(response => {console.log(response)
                 this.props.history.push('/home')
             })
              .catch(e => console.log(e))
