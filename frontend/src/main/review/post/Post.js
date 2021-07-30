@@ -10,11 +10,14 @@ class Post extends Component {
         post: {},
         parentCommentContent: '',
         parentComments: [],
-        childComments: []
-
+        childComments: [],
     }
 
     componentDidMount() {
+        this.getComments()
+    }
+
+    getComments = () => {
         const postId = this.state.postId
 
         if (postId) {
@@ -27,15 +30,18 @@ class Post extends Component {
             }
     }
 
-    parentCommentHandler = () => {      // 사용자이름 -> localStorage로,    rerendering
+    parentCommentHandler = () => {
         const parentCommentForm = {
             postId: this.props.match.params.id,
             content: this.state.parentCommentContent,
             parentId: 0
          }
         axios.post('/api/comments/parent_comments', parentCommentForm)
-            .then(response => {console.log(response)})
+            .then(response => {console.log(response)
+                this.getComments()
+            })
             .catch(e => console.log(e))
+        
     }
 
 
@@ -65,7 +71,8 @@ class Post extends Component {
                 {postBlcok}
                 
                 {parentComments.map( parentComment => { return (
-                    <ParentComment postId={postId} parentComment={parentComment} childComments={childComments}/>)}
+                    <ParentComment postId={postId} parentComment={parentComment} childComments={childComments}
+                        getComments={this.getComments}/>)}
                 )}
             </div>
         )           

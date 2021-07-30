@@ -1,5 +1,6 @@
 import { Component } from "react"
 import axios from "axios"
+import Post from "./Post"
 import ChildComment from "./ChildComment"
 import './ParentComment.css'
 
@@ -17,7 +18,9 @@ class ParentComment extends Component {
             parentId: parentId
         }
         axios.post('/api/comments/child_comments', childCommentForm)
-            .then(response => {console.log(response)})
+            .then(response => {console.log(response)
+                this.props.getComments()
+            })
             .catch(e => console.log(e))
     }
     
