@@ -1,12 +1,12 @@
 package ecinema.security;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import ecinema.domain.User;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,27 +19,35 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 
     private final Key key;
 
-    private long tokenValidTime = 30 * 60 * 1000L;
+    public static final long tokenValidTime = 30 * 60 * 1000L;
+
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    public static final String BEARER_PREFIX = "Bearer ";
+
 
     @Autowired
     private UserRepositoryUserDetailsService userRepositoryUserDetailsService;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, UserRepositoryUserDetailsService userRepositoryUserDetailsService) {
-        this.userRepositoryUserDetailsService = userRepositoryUserDetailsService;
-
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Long userId, String username) {
+    public String createToken(Authentication authentication) {
+
+        String username = authentication.getName();
+        String userId = ((User) authentication.getPrincipal()).getId().toString();
+
         HashMap<String, Object> claim = new HashMap<>();
         claim.put("username", username);
-        claim.put("userId", userId.toString());
+        claim.put("userId", userId);
 
         Claims claims = Jwts.claims(claim);
         Date date = new Date();
@@ -54,23 +62,38 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userRepositoryUserDetailsService.loadUserByUsername(this.getUsername(token));
+
         return new UsernamePasswordAuthenticationToken(userDetails,"", userDetails.getAuthorities());
     }
 
     public String getUsername(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+        return (String) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("username");
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("accessToken");
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+
+        if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwtToken);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
-            return false;
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwtToken);
+            return true;
+        } catch (SignatureException e) {
+            log.info("잘못된 JWT 서명입니다.");
+        } catch (MalformedJwtException e) {
+            log.info("잘못된 JWT 토큰입니다.");
+        } catch (ExpiredJwtException e) {
+            log.info("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.info("지원돠지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.info("JWT 토큰이 유효하지 않습니다.");
         }
+        return false;
     }
 }

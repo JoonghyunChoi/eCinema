@@ -20,6 +20,6 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
         if (user != null) {
             return user;
         }
-        throw new UsernameNotFoundException("User '" + username + "' not found");
+        throw new UsernameNotFoundException("사용자 '" + username + "'을(를) 찾지 못했습니다.");
     }
 }

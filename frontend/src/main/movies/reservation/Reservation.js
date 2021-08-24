@@ -26,7 +26,11 @@ class Reservation extends Component {
             ccExpiration: this.state.ccExpiration,
             ccCVV: this.state.ccCVV
         }
-        axios.post('/api/reservations', post)
+
+        axios.post('/api/reservations', post, {
+             headers : {
+                 'Authorization': 'Bearer ' + localStorage.getItem('token')     // 다른 기능도 토큰 추가 예정
+             }})
              .then(response => {console.log(response)
                 this.props.history.push('/home')
             })

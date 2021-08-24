@@ -2,8 +2,11 @@ package ecinema.security;
 
 
 import ecinema.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,25 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
-    private UserRepositoryUserDetailsService userRepositoryUserDetailsService;
+    private AuthenticationManager authenticationManager;
 
     @PostMapping(consumes = "application/json")
     public String login(@RequestBody User user) throws IllegalArgumentException {
-        User member = userRepositoryUserDetailsService.loadUserByUsername(user.getUsername());
 
-        if (member != null) {
-            if (!passwordEncoder.matches(user.getPassword(), member.getPassword())) {
-                throw new IllegalArgumentException("Wrong password");
-            }
-            return jwtTokenProvider.createToken(member.getId(), member.getUsername());
-        }
-        throw new IllegalArgumentException("Invalid login");
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+        return jwtTokenProvider.createToken(authentication);
     }
 }

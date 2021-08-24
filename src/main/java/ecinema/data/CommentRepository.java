@@ -9,5 +9,5 @@ import java.util.List;
 @RepositoryRestResource
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findByPostId(Long id);    // 삭제
+    List<Comment> findByPostId(Long id);
 }
