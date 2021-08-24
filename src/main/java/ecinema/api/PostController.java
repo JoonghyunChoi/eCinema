@@ -40,6 +40,7 @@ public class PostController {
 
         int totalPages = postList.getTotalPages();
         List<Integer> pageIndexes = new ArrayList<>();
+
         for (int i=0; i<totalPages; i++ ) {
             pageIndexes.add(i);
         }

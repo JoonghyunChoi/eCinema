@@ -23,7 +23,7 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping(consumes = "application/json")
-    public String login(@RequestBody User user) throws IllegalArgumentException {
+    public String login(@RequestBody User user) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 
