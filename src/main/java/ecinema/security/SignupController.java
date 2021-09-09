@@ -12,15 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/signup")
 public class SignupController {
 
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserRepository userRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public SignupController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public User Signup(@Validated @RequestBody SignupForm signupForm) {
 
-        return userRepo.save(signupForm.toUser(passwordEncoder));
+        return userRepository.save(signupForm.toUser(passwordEncoder));
     }
 }

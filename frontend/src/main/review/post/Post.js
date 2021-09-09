@@ -36,7 +36,7 @@ class Post extends Component {
             content: this.state.parentCommentContent,
             parentId: 0
          }
-        axios.post('/api/comments/parent_comments', parentCommentForm)
+        axios.post('/api/comments/parent_comment', parentCommentForm)
             .then(response => {console.log(response)
                 this.getComments()
             })

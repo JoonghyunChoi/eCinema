@@ -25,20 +25,22 @@ public class JwtTokenProvider {
 
     private final Key key;
 
+    private final CustomUserDetailsService customUserDetailsService;
+
     public static final long tokenValidTime = 30 * 60 * 1000L;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     public static final String BEARER_PREFIX = "Bearer ";
 
-
     @Autowired
-    private UserRepositoryUserDetailsService userRepositoryUserDetailsService;
-
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, CustomUserDetailsService customUserDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+
+        this.customUserDetailsService = customUserDetailsService;
     }
+
 
     public String createToken(Authentication authentication) {
 
@@ -61,7 +63,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userRepositoryUserDetailsService.loadUserByUsername(this.getUsername(token));
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getUsername(token));
 
         return new UsernamePasswordAuthenticationToken(userDetails,"", userDetails.getAuthorities());
     }

@@ -17,7 +17,7 @@ class ParentComment extends Component {
             content: this.state.childCommentContent,
             parentId: parentId
         }
-        axios.post('/api/comments/child_comments', childCommentForm)
+        axios.post('/api/comments/child_comment', childCommentForm)
             .then(response => {console.log(response)
                 this.props.getComments()
             })

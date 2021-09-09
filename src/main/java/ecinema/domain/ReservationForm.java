@@ -1,7 +1,5 @@
-package ecinema.api;
+package ecinema.domain;
 
-import ecinema.domain.Reservation;
-import ecinema.domain.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

@@ -2,7 +2,6 @@ package ecinema.security;
 
 
 import ecinema.domain.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,13 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
-@RequiredArgsConstructor
 public class LoginController {
 
+    private final JwtTokenProvider jwtTokenProvider;
+
+    private final AuthenticationManager authenticationManager;
+
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public LoginController(JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.authenticationManager = authenticationManager;
+    }
+
 
     @PostMapping(consumes = "application/json")
     public String login(@RequestBody User user) {

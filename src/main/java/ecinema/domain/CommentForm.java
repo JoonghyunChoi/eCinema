@@ -1,7 +1,5 @@
-package ecinema.api;
+package ecinema.domain;
 
-import ecinema.domain.Comment;
-import ecinema.domain.Post;
 import lombok.Data;
 
 @Data

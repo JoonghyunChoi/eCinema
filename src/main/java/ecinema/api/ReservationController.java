@@ -1,10 +1,10 @@
 package ecinema.api;
 
 
-import ecinema.data.ReservationRepository;
-import ecinema.data.UserRepository;
 import ecinema.domain.Reservation;
+import ecinema.domain.ReservationForm;
 import ecinema.domain.User;
+import ecinema.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.EntityModel;
@@ -21,10 +21,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RepositoryRestController
 public class ReservationController {
 
+    private final CustomUserDetailsService customUserDetailsService;
+
+    private final ReservationService reservationService;
+
     @Autowired
-    private ReservationRepository reservationRepo;
-    @Autowired
-    private UserRepository userRepo;
+    public ReservationController(ReservationService reservationService, CustomUserDetailsService customUserDetailsService) {
+
+        this.reservationService = reservationService;
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
 
     @PostMapping
     @ResponseBody
@@ -32,10 +39,10 @@ public class ReservationController {
 
         if (reservationForm.getPrice().equals("6,000")) {
 
-            User user = userRepo.getById(reservationForm.getUserId());
+            User user = customUserDetailsService.getUserById(reservationForm.getUserId());
             Reservation reservation = reservationForm.toReservation(user);
 
-            EntityModel<Reservation> reserve = EntityModel.of(reservationRepo.save(reservation));
+            EntityModel<Reservation> reserve = EntityModel.of(reservationService.saveReservation(reservation));
             reserve.add(linkTo(methodOn(ReservationController.class).postReservation(reservationForm)).withSelfRel());
 
             return reserve;
