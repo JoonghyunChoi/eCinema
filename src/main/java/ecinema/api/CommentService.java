@@ -3,21 +3,17 @@ package ecinema.api;
 
 import ecinema.data.CommentRepository;
 import ecinema.domain.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;
-
-    @Autowired
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
 
 
     public List<List<Comment>> getCommentLists(List<Comment> commentList) {

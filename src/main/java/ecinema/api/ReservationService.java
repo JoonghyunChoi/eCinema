@@ -3,18 +3,14 @@ package ecinema.api;
 
 import ecinema.data.ReservationRepository;
 import ecinema.domain.Reservation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
-    @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
 
 
     public Reservation saveReservation(Reservation reservation) {

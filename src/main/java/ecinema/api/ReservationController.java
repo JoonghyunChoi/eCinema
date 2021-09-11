@@ -5,7 +5,7 @@ import ecinema.domain.Reservation;
 import ecinema.domain.ReservationForm;
 import ecinema.domain.User;
 import ecinema.security.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.validation.annotation.Validated;
@@ -19,18 +19,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RequestMapping("/reservations")
 @RepositoryRestController
+@RequiredArgsConstructor
 public class ReservationController {
 
     private final CustomUserDetailsService customUserDetailsService;
 
     private final ReservationService reservationService;
-
-    @Autowired
-    public ReservationController(ReservationService reservationService, CustomUserDetailsService customUserDetailsService) {
-
-        this.reservationService = reservationService;
-        this.customUserDetailsService = customUserDetailsService;
-    }
 
 
     @PostMapping

@@ -4,7 +4,7 @@ package ecinema.api;
 import ecinema.domain.Comment;
 import ecinema.domain.CommentForm;
 import ecinema.domain.Post;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -17,17 +17,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RequestMapping("/comments")
 @RepositoryRestController
+@RequiredArgsConstructor
 public class CommentController {
 
     private final PostService postService;
 
     private final CommentService commentService;
-
-    @Autowired
-    public CommentController(PostService postService, CommentService commentService) {
-        this.postService = postService;
-        this.commentService = commentService;
-    }
 
 
     @GetMapping("/{id}")
