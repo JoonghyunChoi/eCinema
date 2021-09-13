@@ -29,7 +29,7 @@ public class ReservationController {
 
     @PostMapping
     @ResponseBody
-    public EntityModel<Reservation> postReservation(@Validated @RequestBody ReservationForm reservationForm) throws IllegalArgumentException {
+    public EntityModel<Reservation> postReservation(@Validated @RequestBody ReservationForm reservationForm) {
 
         if (reservationForm.getPrice().equals("6,000")) {
 

@@ -1,6 +1,5 @@
 package ecinema.security;
 
-import ecinema.data.UserRepository;
 import ecinema.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SignupController {
 
-    private final UserRepository userRepository;
+    private final CustomUserDetailsService customUserDetailsService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -22,6 +21,6 @@ public class SignupController {
     @ResponseStatus(HttpStatus.CREATED)
     public User Signup(@Validated @RequestBody SignupForm signupForm) {
 
-        return userRepository.save(signupForm.toUser(passwordEncoder));
+        return customUserDetailsService.saveUser(signupForm.toUser(passwordEncoder));
     }
 }
