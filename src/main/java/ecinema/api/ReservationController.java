@@ -36,10 +36,11 @@ public class ReservationController {
             User user = customUserDetailsService.getUserById(reservationForm.getUserId());
             Reservation reservation = reservationForm.toReservation(user);
 
-            EntityModel<Reservation> reserve = EntityModel.of(reservationService.saveReservation(reservation));
-            reserve.add(linkTo(methodOn(ReservationController.class).postReservation(reservationForm)).withSelfRel());
+            EntityModel<Reservation> entityModel = EntityModel.of(reservationService.saveReservation(reservation));
 
-            return reserve;
+            entityModel.add(linkTo(methodOn(ReservationController.class).postReservation(reservationForm)).withSelfRel());
+
+            return entityModel;
         }
         throw new IllegalArgumentException("주문 가격이 실제 가격과 다릅니다.");
     }

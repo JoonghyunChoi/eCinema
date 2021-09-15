@@ -16,8 +16,8 @@ class Review extends Component {
         axios.get('/api/posts?page=0')
             .then(response => {
                 console.log(response)
-                this.setState({ posts: response.data._embedded.content,
-                    pageIndexes:  response.data.pageIndexes 
+                this.setState({ posts: response.data.content[0].content,
+                    pageIndexes:  response.data.content[1]
                 })
             })
             .catch(e => console.log(e)) 
@@ -27,7 +27,7 @@ class Review extends Component {
     currentPageHandler = (pageIndex) => {
         axios.get('/api/posts?page=' + pageIndex)
         .then(response => { 
-            this.setState( {posts: response.data._embedded.content} )
+            this.setState( {posts: response.data.content[0].content} )
         })
         .catch(e => console.log(e))  
     }

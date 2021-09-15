@@ -16,12 +16,12 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
 
-    public List<List<Comment>> getCommentLists(List<Comment> commentList) {
+    public List<List<Comment>> getCommentLists(List<Comment> comments) {
 
         List<Comment> parentList = new ArrayList<>();
         List<Comment> childList = new ArrayList<>();
 
-        for (Comment comment : commentList) {
+        for (Comment comment : comments) {
             if (comment.getParentId() == 0) {
                 parentList.add(comment);
             }

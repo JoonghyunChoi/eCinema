@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user != null) {
             return user;
         }
-        throw new UsernameNotFoundException("사용자 '" + username + "'을(를) 찾지 못했습니다.");
+        throw new UsernameNotFoundException(String.format("사용자 '%s'을(를) 찾지 못했습니다.", username));
     }
 
     public User getUserById(Long id) {

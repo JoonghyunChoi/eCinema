@@ -29,12 +29,14 @@ public class CommentController {
     @ResponseBody
     public CollectionModel<List<Comment>> getComments(@PathVariable("id") Long id) {
 
-        List<Comment> commentList = commentService.findCommentByPostId(id);
+        List<Comment> comments = commentService.findCommentByPostId(id);
 
-        CollectionModel<List<Comment>> comments = CollectionModel.of(commentService.getCommentLists(commentList));
-        comments.add(linkTo(methodOn(CommentController.class).getComments(id)).withSelfRel());
+        List<List<Comment>> commentLists = commentService.getCommentLists(comments);
 
-        return comments;
+        CollectionModel<List<Comment>> collectionModel = CollectionModel.of(commentLists);
+        collectionModel.add(linkTo(methodOn(CommentController.class).getComments(id)).withSelfRel());
+
+        return collectionModel;
     }
 
     @PostMapping("/parent_comment")
@@ -44,10 +46,10 @@ public class CommentController {
         Post post = postService.getPostById(parentCommentForm.getPostId());
         Comment parentComment = parentCommentForm.toComment(post);
 
-        EntityModel<Comment> comment = EntityModel.of(commentService.saveComment(parentComment));
-        comment.add(linkTo(methodOn(CommentController.class).postParentComment(parentCommentForm)).withSelfRel());
+        EntityModel<Comment> entityModel = EntityModel.of(commentService.saveComment(parentComment));
+        entityModel.add(linkTo(methodOn(CommentController.class).postParentComment(parentCommentForm)).withSelfRel());
 
-        return comment;
+        return entityModel;
     }
 
     @PostMapping("/child_comment")
@@ -57,9 +59,9 @@ public class CommentController {
         Post post = postService.getPostById(childCommentForm.getPostId());
         Comment childComment = childCommentForm.toComment(post);
 
-        EntityModel<Comment> comment = EntityModel.of(commentService.saveComment(childComment));
-        comment.add(linkTo(methodOn(CommentController.class).postChildComment(childCommentForm)).withSelfRel());
+        EntityModel<Comment> entityModel = EntityModel.of(commentService.saveComment(childComment));
+        entityModel.add(linkTo(methodOn(CommentController.class).postChildComment(childCommentForm)).withSelfRel());
 
-        return comment;
+        return entityModel;
     }
 }
