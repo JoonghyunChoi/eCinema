@@ -2,9 +2,9 @@ package ecinema.security;
 
 import ecinema.data.UserRepository;
 import ecinema.domain.User;
+import ecinema.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +15,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     
 
     @Override
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) {
 
         User user = userRepository.findByUsername(username);
         if (user != null) {
             return user;
         }
-        throw new UsernameNotFoundException(String.format("사용자 '%s'을(를) 찾지 못했습니다.", username));
+        throw new EntityNotFoundException(String.format("사용자 '%s'을(를) 찾지 못했습니다.", username));
     }
 
     public User getUserById(Long id) {

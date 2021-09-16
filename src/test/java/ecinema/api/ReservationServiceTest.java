@@ -2,6 +2,7 @@ package ecinema.api;
 
 import ecinema.data.ReservationRepository;
 import ecinema.domain.Reservation;
+import ecinema.domain.ReservationForm;
 import ecinema.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class ReservationServiceTest {
 
     private User user;
 
+    private ReservationForm reservationForm;
+
     private Reservation reservation;
 
     @BeforeEach
@@ -36,17 +39,33 @@ public class ReservationServiceTest {
         user.setEmail("b");
         user.setPhoneNumber("234");
 
-        reservation = new Reservation();
-        reservation.setUser(user);
-        reservation.setMovieId("1");
-        reservation.setPrice("6,000");
-        reservation.setRsvDate("12/31");
-        reservation.setRsvTime("12:00");
-        reservation.setCcNumber("123");
-        reservation.setCcExpiration("12/24");
-        reservation.setCcCVV("255");
+        reservationForm = new ReservationForm();
+        reservationForm.setUserId(user.getId());
+        reservationForm.setPrice("6,000");
+        reservationForm.setMovieId("1");
+        reservationForm.setRsvDate("9/1");
+        reservationForm.setRsvTime("24:00");
+        reservationForm.setCcCVV("123");
+        reservationForm.setCcNumber("234");
+        reservationForm.setCcExpiration("345");
+
+        reservation = reservationForm.toReservation(user);
     }
 
+
+    @Test
+    public void checkPriceTrue() {
+
+        assertThat(reservationService.checkPrice(reservationForm.getPrice())).isEqualTo(true);
+    }
+
+    @Test
+    public void checkPriceFalse() {
+
+        reservationForm.setPrice("600");
+
+        assertThat(reservationService.checkPrice(reservationForm.getPrice())).isEqualTo(false);
+    }
 
     @Test
     public void saveReserve() {

@@ -1,12 +1,16 @@
-package ecinema.domain;
+package ecinema.exception;
+
 
 public enum ErrorCode {
 
-    BAD_REQUEST("Request is invalid!"),
-    ACCESS_DENIED( "Access is denied!"),
-    UNAUTHORIZED( "Authorization is required!"),
-    METHOD_NOT_ALLOWED( "HTTP Method is not supported!"),
-    INTERNAL_SERVER_ERROR("Internal server error!");
+    INVALID_VALUE("Invalid method argument value"),
+    INVALID_TYPE("Invalid method argument type"),
+    ACCESS_DENIED( "Access is denied"),
+    UNAUTHORIZED( "Authorization is required"),
+    METHOD_NOT_ALLOWED( "HTTP Method is not supported"),
+    INVALID_PRICE("Price is not valid"),
+    ENTITY_NOT_FOUND("Entity not found"),
+    INTERNAL_SERVER_ERROR("Internal server error");
 
 
     private final String message;

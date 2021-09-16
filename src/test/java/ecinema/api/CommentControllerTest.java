@@ -9,20 +9,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+@WebMvcTest(controllers = CommentController.class)
 public class CommentControllerTest {
 
     @Autowired
@@ -76,6 +79,7 @@ public class CommentControllerTest {
 
 
     @Test
+    @WithMockUser
     public void getComments() throws Exception {
 
         List<Comment> parentList = new ArrayList<>();
@@ -91,34 +95,39 @@ public class CommentControllerTest {
         Mockito.when(commentService.findCommentByPostId(post.getId())).thenReturn(comments);
         Mockito.when(commentService.getCommentLists(comments)).thenReturn(commentLists);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/comments/" + post.getId()))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+        mockMvc.perform(get("/comments/" + post.getId())
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     @Test
+    @WithMockUser
     public void postParentComment() throws Exception {
 
         Mockito.when(postService.getPostById(parentCommentForm.getPostId())).thenReturn(post);
         Mockito.when(commentService.saveComment(parentComment)).thenReturn(parentComment);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/comments/parent_comment")
+        mockMvc.perform(post("/comments/parent_comment")
                 .content(new Gson().toJson(parentCommentForm))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+                .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     @Test
+    @WithMockUser
     public void postChildComment() throws Exception {
 
         Mockito.when(postService.getPostById(childCommentForm.getPostId())).thenReturn(post);
         Mockito.when(commentService.saveComment(childComment)).thenReturn(childComment);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/comments/child_comment")
+        mockMvc.perform(post("/comments/child_comment")
                 .content(new Gson().toJson(childCommentForm))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+                .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 }

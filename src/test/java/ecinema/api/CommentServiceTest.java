@@ -54,6 +54,7 @@ public class CommentServiceTest {
         parentCommentForm.setWriter("a");
         parentCommentForm.setContent("b");
         parentComment = parentCommentForm.toComment(post);
+        parentComment.setId(Long.valueOf(1));
 
         childCommentForm = new CommentForm();
         childCommentForm.setPostId(post.getId());

@@ -1,5 +1,4 @@
-package ecinema.domain;
-
+package ecinema.exception;
 
 import lombok.Data;
 
