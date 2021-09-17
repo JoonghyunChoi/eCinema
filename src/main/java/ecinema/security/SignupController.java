@@ -19,7 +19,7 @@ public class SignupController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public User Signup(@Validated @RequestBody SignupForm signupForm) {
+    public User signup(@RequestBody @Validated SignupForm signupForm) {
 
         return customUserDetailsService.saveUser(signupForm.toUser(passwordEncoder));
     }

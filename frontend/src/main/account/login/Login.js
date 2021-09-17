@@ -16,7 +16,7 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password,
         }
-        axios.post('/login', post)
+        axios.post('/signin', post)
             .then(response => {console.log(response)
 
             const token = response.data

@@ -46,12 +46,6 @@ public class CommentRepositoryTest {
 
 
     @Test
-    public void saveComment() {
-
-        assertThat(commentRepository.save(comment)).isEqualTo(comment);
-    }
-
-    @Test
     public void findCommentByPostId() {
 
         List<Comment> comments = new ArrayList<>();
@@ -62,5 +56,11 @@ public class CommentRepositoryTest {
         comments.add(comment);
 
         assertThat(commentRepository.findByPostId(post.getId())).isEqualTo(comments);
+    }
+
+    @Test
+    public void saveComment() {
+
+        assertThat(commentRepository.save(comment)).isEqualTo(comment);
     }
 }

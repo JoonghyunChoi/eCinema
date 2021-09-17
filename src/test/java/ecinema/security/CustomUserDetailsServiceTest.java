@@ -1,10 +1,9 @@
-package ecinema.api;
+package ecinema.security;
 
 
 import ecinema.data.UserRepository;
 import ecinema.domain.User;
 import ecinema.exception.EntityNotFoundException;
-import ecinema.security.CustomUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,11 +18,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CustomUserDetailsServiceTest {
 
-    @Mock
-    private UserRepository userRepository;
-
     @InjectMocks
     private CustomUserDetailsService customUserDetailsService;
+
+    @Mock
+    private UserRepository userRepository;
 
     private User user;
 

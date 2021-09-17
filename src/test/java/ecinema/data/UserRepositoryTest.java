@@ -40,7 +40,7 @@ public class UserRepositoryTest {
 
 
     @Test
-    public void loadUserByUsername() {
+    public void findByUsername() {
 
         userRepository.save(user);
 
@@ -51,13 +51,5 @@ public class UserRepositoryTest {
     public void saveUser() {
 
         assertThat(userRepository.save(user)).isEqualTo(user);
-    }
-
-    @Test
-    public void getByUserId() {
-
-        userRepository.save(user);
-
-        assertThat(userRepository.getById(user.getId())).isEqualTo(user);
     }
 }

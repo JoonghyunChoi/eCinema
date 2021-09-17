@@ -38,12 +38,6 @@ public class PostRepositoryTest {
 
 
     @Test
-    public void getPostById() {
-
-        assertThat(postRepository.getById(post.getId())).isEqualTo(post);
-    }
-
-    @Test
     public void findAllPost() {
 
         List<Post> posts = new ArrayList<>();

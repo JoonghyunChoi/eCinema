@@ -18,11 +18,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ReservationServiceTest {
 
-    @Mock
-    private ReservationRepository reservationRepository;
-
     @InjectMocks
     private ReservationService reservationService;
+
+    @Mock
+    private ReservationRepository reservationRepository;
 
     private User user;
 

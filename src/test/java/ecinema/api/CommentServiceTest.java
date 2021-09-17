@@ -21,11 +21,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
 
-    @Mock
-    private CommentRepository commentRepository;
-
     @InjectMocks
     private CommentService commentService;
+
+    @Mock
+    private CommentRepository commentRepository;
 
     private Post post;
 

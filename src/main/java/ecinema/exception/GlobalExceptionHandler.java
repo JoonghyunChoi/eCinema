@@ -19,8 +19,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
-        log.error("handleMethodArgumentNotValidException", e);
-        final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_VALUE);
+        log.error("Handle MethodArgumentNotValidException", e);
+        final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_REQUEST_VALUE);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -28,8 +28,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
 
-        log.error("handleMethodArgumentTypeMismatchException", e);
-        final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_TYPE);
+        log.error("Handle MethodArgumentTypeMismatchException", e);
+        final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INVALID_REQUEST_TYPE);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 
-        log.error("handleHttpRequestMethodNotSupportedException", e);
+        log.error("Handle HttpRequestMethodNotSupportedException", e);
         final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.METHOD_NOT_ALLOWED);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.METHOD_NOT_ALLOWED);
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
 
-        log.error("handleAccessDeniedException", e);
+        log.error("Handle AccessDeniedException", e);
         final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ACCESS_DENIED);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
 
-        log.error("handleBusinessException", e);
+        log.error("Handle BusinessException", e);
         final ErrorResponse errorResponse = new ErrorResponse(e.getErrorCode());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
 
-        log.error("handleException", e);
+        log.error("Handle Exception", e);
         final ErrorResponse errorResponse = new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
