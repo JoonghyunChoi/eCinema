@@ -1,0 +1,17 @@
+spring:
+  data:
+    rest:
+      base-path: /api
+
+loggin:
+  level:
+    domain: DEBUG
+
+---
+
+spring:
+  profiles: prod
+
+logging:
+  level:
+    domain: WARN
