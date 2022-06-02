@@ -1,38 +1,30 @@
 package ecinema.api;
 
-import ecinema.data.ReservationRepository;
-import ecinema.domain.Reservation;
-import ecinema.domain.ReservationForm;
-import ecinema.domain.User;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
+import ecinema.data.ReservationRepository;
+import ecinema.domain.Reservation;
+import ecinema.domain.ReservationForm;
+import ecinema.domain.User;
 
 @ExtendWith(MockitoExtension.class)
 public class ReservationServiceTest {
-
     @InjectMocks
     private ReservationService reservationService;
-
     @Mock
     private ReservationRepository reservationRepository;
-
     private User user;
-
     private ReservationForm reservationForm;
-
     private Reservation reservation;
 
     @BeforeEach
     public void setup() {
-
         user = new User();
         user.setUsername("a");
         user.setPassword("123");
@@ -48,30 +40,23 @@ public class ReservationServiceTest {
         reservationForm.setCcCVV("123");
         reservationForm.setCcNumber("234");
         reservationForm.setCcExpiration("345");
-
         reservation = reservationForm.toReservation(user);
     }
 
-
     @Test
     public void checkPriceTrue() {
-
         assertThat(reservationService.checkPrice(reservationForm.getPrice())).isEqualTo(true);
     }
 
     @Test
     public void checkPriceFalse() {
-
         reservationForm.setPrice("600");
-
         assertThat(reservationService.checkPrice(reservationForm.getPrice())).isEqualTo(false);
     }
 
     @Test
     public void saveReserve() {
-
         when(reservationRepository.save(reservation)).thenReturn(reservation);
-
         assertThat(reservationService.saveReservation(reservation)).isEqualTo(reservation);
     }
 }

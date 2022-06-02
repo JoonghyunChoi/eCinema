@@ -1,8 +1,6 @@
 package ecinema.exception;
 
-
 public enum ErrorCode {
-
     INVALID_REQUEST_VALUE("Request value is not valid"),
     INVALID_REQUEST_TYPE("Request type is not valid"),
     ACCESS_DENIED( "Access is denied"),
@@ -11,7 +9,6 @@ public enum ErrorCode {
     INVALID_PRICE("Price is not valid"),
     ENTITY_NOT_FOUND("Entity not found"),
     INTERNAL_SERVER_ERROR("Internal server error");
-
 
     private final String message;
 

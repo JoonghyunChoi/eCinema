@@ -3,7 +3,6 @@ package ecinema.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,12 +11,11 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @NoArgsConstructor
 public class Comment {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "POST_ID")
+    @JoinColumn(name="POST_ID")
     private Post post;
     private Long parentId;
     private String writer;

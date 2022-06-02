@@ -1,39 +1,33 @@
 package ecinema.api;
 
-
-import ecinema.data.CommentRepository;
-import ecinema.domain.Comment;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
+import ecinema.domain.Comment;
+import ecinema.data.CommentRepository;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-
     private final CommentRepository commentRepository;
 
-
     public List<List<Comment>> getCommentLists(List<Comment> comments) {
-
-        List<Comment> parentList = new ArrayList<>();
-        List<Comment> childList = new ArrayList<>();
+        List<Comment> parentCommentList = new ArrayList<>();
+        List<Comment> childCommentList = new ArrayList<>();
 
         for (Comment comment : comments) {
             if (comment.getParentId() == 0) {
-                parentList.add(comment);
+                parentCommentList.add(comment);
             }
             else {
-                childList.add(comment);
+                childCommentList.add(comment);
             }
         }
 
         List<List<Comment>> commentLists = new ArrayList<>();
-        commentLists.add(parentList);
-        commentLists.add(childList);
-
+        commentLists.add(parentCommentList);
+        commentLists.add(childCommentList);
         return commentLists;
     }
 

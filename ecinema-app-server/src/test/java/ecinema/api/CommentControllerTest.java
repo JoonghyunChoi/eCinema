@@ -1,57 +1,43 @@
 package ecinema.api;
 
-
-import com.google.gson.Gson;
-import ecinema.domain.Comment;
-import ecinema.domain.CommentForm;
-import ecinema.domain.Post;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mockito;
+import com.google.gson.Gson;
+import ecinema.domain.Comment;
+import ecinema.domain.CommentForm;
+import ecinema.domain.Post;
+import java.util.ArrayList;
+import java.util.List;
 
-
-@WebMvcTest(controllers = CommentController.class)
+@WebMvcTest(controllers=CommentController.class)
 public class CommentControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private CommentService commentService;
-
     @MockBean
     private PostService postService;
-
     private Post post;
-
-    private CommentForm parentCommentForm;
-
-    private CommentForm childCommentForm;
-
     private Comment parentComment;
-
     private Comment childComment;
-
+    private CommentForm parentCommentForm;
+    private CommentForm childCommentForm;
     private List<Comment> comments;
 
     @BeforeEach
     public void setup() {
-
         post = new Post();
         post.setTitle("a");
         post.setContent("b");
@@ -77,11 +63,9 @@ public class CommentControllerTest {
         comments.add(childComment);
     }
 
-
-    @Test
     @WithMockUser
+    @Test
     public void getComments() throws Exception {
-
         List<Comment> parentList = new ArrayList<>();
         List<Comment> childList = new ArrayList<>();
         List<List<Comment>> commentLists = new ArrayList<>();
@@ -101,10 +85,9 @@ public class CommentControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @WithMockUser
+    @Test
     public void postParentComment() throws Exception {
-
         Mockito.when(postService.getPostById(parentCommentForm.getPostId())).thenReturn(post);
         Mockito.when(commentService.saveComment(parentComment)).thenReturn(parentComment);
 
@@ -116,10 +99,9 @@ public class CommentControllerTest {
                 .andDo(print());
     }
 
-    @Test
     @WithMockUser
+    @Test
     public void postChildComment() throws Exception {
-
         Mockito.when(postService.getPostById(childCommentForm.getPostId())).thenReturn(post);
         Mockito.when(commentService.saveComment(childComment)).thenReturn(childComment);
 

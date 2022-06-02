@@ -1,32 +1,22 @@
 package ecinema.data;
 
-
+import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import ecinema.domain.Reservation;
 import ecinema.domain.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class ReservationRepositoryTest {
-
     @Autowired
     private ReservationRepository reservationRepository;
-
-    private User user;
-
     private Reservation reservation;
+    private User user;
 
     @BeforeEach
     public void setup() {
-
         user = new User();
         user.setUsername("a");
         user.setPassword("123");
@@ -44,10 +34,8 @@ public class ReservationRepositoryTest {
         reservation.setCcCVV("255");
     }
 
-
     @Test
     public void save() {
-
         assertThat(reservationRepository.save(reservation)).isEqualTo(reservation);
     }
 }

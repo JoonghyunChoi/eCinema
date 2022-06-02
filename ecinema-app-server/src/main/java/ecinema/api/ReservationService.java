@@ -1,20 +1,16 @@
 package ecinema.api;
 
-
-import ecinema.data.ReservationRepository;
-import ecinema.domain.Reservation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import ecinema.domain.Reservation;
+import ecinema.data.ReservationRepository;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
-
     private final ReservationRepository reservationRepository;
 
-
     public boolean checkPrice(String price) {
-
         if (price.equals("6,000")) {
             return true;
         }
@@ -22,7 +18,6 @@ public class ReservationService {
     }
 
     public Reservation saveReservation(Reservation reservation) {
-
         return reservationRepository.save(reservation);
     }
 }

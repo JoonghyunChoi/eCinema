@@ -1,47 +1,35 @@
 package ecinema.api;
 
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ecinema.data.CommentRepository;
 import ecinema.domain.Comment;
 import ecinema.domain.CommentForm;
 import ecinema.domain.Post;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
-
     @InjectMocks
     private CommentService commentService;
-
     @Mock
     private CommentRepository commentRepository;
-
     private Post post;
-
-    private CommentForm parentCommentForm;
-
-    private CommentForm childCommentForm;
-
     private Comment parentComment;
-
     private Comment childComment;
-
+    private CommentForm parentCommentForm;
+    private CommentForm childCommentForm;
     private List<Comment> comments;
 
     @BeforeEach
     public void setup() {
-
         post = new Post();
         post.setTitle("a");
         post.setContent("b");
@@ -68,10 +56,8 @@ public class CommentServiceTest {
         comments.add(childComment);
     }
 
-
     @Test
     public void getCommentLists() {
-
         List<Comment> parentList = new ArrayList<>();
         List<Comment> childList = new ArrayList<>();
         List<List<Comment>> commentLists = new ArrayList<>();
@@ -87,17 +73,13 @@ public class CommentServiceTest {
 
     @Test
     public void saveComment() {
-
         when(commentRepository.save(parentComment)).thenReturn(parentComment);
-
         assertThat(commentService.saveComment(parentComment)).isEqualTo(parentComment);
     }
 
     @Test
     public void findCommentByPostId() {
-
         when(commentRepository.findByPostId(post.getId())).thenReturn(comments);
-
         assertThat(commentService.findCommentByPostId(post.getId())).isEqualTo(comments);
     }
 }
